@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI in Construction Portfolio</title>
+  <style>
+    :root {
+      --dust-grey: #dad7cd;
+      --dry-sage: #a3b18a;
+      --fern: #588157;
+      --hunter-green: #3a5a40;
+      --pine-teal: #344e41;
+      --white: #f8f8f6;
+      --shadow: 0 18px 45px rgba(52, 78, 65, 0.14);
+      --radius: 22px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--dust-grey) 0%, #eef0e8 100%);
+      color: var(--pine-teal);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border-radius: 18px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 5.5rem 0;
+    }
+
+    .section-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2.25rem;
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      color: var(--fern);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.05;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.7rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(52, 78, 65, 0.12);
+      font-weight: 700;
+      color: var(--hunter-green);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.4rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary {
+      background: var(--pine-teal);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--pine-teal);
+      border: 2px solid rgba(52, 78, 65, 0.25);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(218, 215, 205, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(52, 78, 65, 0.12);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 76px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .brand span {
+      color: var(--fern);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-weight: 700;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background: rgba(88, 129, 87, 0.12);
+      outline: none;
+    }
+
+    .hero {
+      padding: 4.5rem 0 3rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card {
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      background: linear-gradient(135deg, var(--hunter-green), var(--pine-teal));
+      color: var(--white);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 540px;
+    }
+
+    .hero-copy p {
+      max-width: 42rem;
+      margin-top: 1.25rem;
+      color: rgba(248, 248, 246, 0.88);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-card {
+      background: var(--white);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hero-image {
+      min-height: 100%;
+      background: linear-gradient(180deg, rgba(163, 177, 138, 0.6), rgba(52, 78, 65, 0.28)),
+        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80') center/cover;
+      border-radius: 24px;
+      min-height: 420px;
+      position: relative;
+    }
+
+    .hero-note {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      background: rgba(248, 248, 246, 0.9);
+      color: var(--pine-teal);
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      font-weight: 700;
+      max-width: 260px;
+    }
+
+    .benefits-grid,
+    .projects-grid,
+    .articles-grid,
+    .contact-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .benefits-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .projects-grid,
+    .articles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(52, 78, 65, 0.1);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--dry-sage), var(--fern));
+      color: var(--white);
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    .about-photo {
+      min-height: 520px;
+      background: linear-gradient(180deg, rgba(218, 215, 205, 0.12), rgba(52, 78, 65, 0.18)),
+        url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80') center/cover;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-box {
+      background: rgba(163, 177, 138, 0.18);
+      padding: 1.1rem;
+      border-radius: 18px;
+      border: 1px solid rgba(52, 78, 65, 0.08);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .project-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .project-image {
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .project-one { background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80'); }
+    .project-two { background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'); }
+    .project-three { background-image: url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80'); }
+
+    .project-content {
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .tag {
+      padding: 0.38rem 0.78rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: rgba(88, 129, 87, 0.14);
+      color: var(--hunter-green);
+    }
+
+    .timeline {
+      margin-top: 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(52, 78, 65, 0.12);
+    }
+
+    .timeline-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .timeline-week {
+      font-weight: 800;
+      color: var(--fern);
+    }
+
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 320px;
+    }
+
+    .article-number {
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(58, 90, 64, 0.3);
+    }
+
+    .article-card ul {
+      padding-left: 1.2rem;
+    }
+
+    .article-card li + li {
+      margin-top: 0.45rem;
+    }
+
+    .cta-panel {
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--fern), var(--pine-teal));
+      color: var(--white);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .contact-card,
+    .footer-card {
+      min-height: 100%;
+    }
+
+    .footer {
+      padding: 2rem 0 4rem;
+    }
+
+    .footer-card {
+      background: var(--pine-teal);
+      color: var(--white);
+      border-radius: 30px;
+      padding: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: rgba(52, 78, 65, 0.8);
+    }
+
+    @media (max-width: 1040px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .benefits-grid,
+      .projects-grid,
+      .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 1rem 0;
+      }
+
+      .nav-links {
+        width: 100%;
+      }
+
+      .hero-copy {
+        padding: 2rem;
+        min-height: auto;
+      }
+
+      .benefits-grid,
+      .projects-grid,
+      .articles-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 4.3rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="brand">AI in <span>Construction</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#projects">My Projects</a>
+        <a href="#articles">Weekly Articles</a>
+        <a href="#contact" class="pill">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div>
+            <span class="pill">Portfolio • Semester Work • GitHub Ready</span>
+            <h1>AI in Construction Portfolio</h1>
+            <p>
+              Welcome to my course portfolio. This site highlights my projects, weekly article summaries,
+              and what I learned throughout the semester in AI in Construction. It is designed to showcase
+              how artificial intelligence can improve planning, jobsite workflows, communication, and decision-making in construction.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#projects">View Projects</a>
+              <a class="btn btn-secondary" href="#articles">Read Weekly Articles</a>
+            </div>
+          </div>
+
+          <div class="tag-row">
+            <span class="tag">AI Workflows</span>
+            <span class="tag">Construction Tech</span>
+            <span class="tag">Course Portfolio</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-image" role="img" aria-label="Construction worker at a jobsite">
+            <div class="hero-note">Built for a college class and styled for a clean GitHub Pages presentation.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Site Highlights</span>
+          <h2>What this portfolio includes</h2>
+          <p class="muted">
+            The layout follows your sitemap with a home page, an about section, a project showcase,
+            and a weekly articles area for summaries and takeaways.
+          </p>
+        </div>
+
+        <div class="benefits-grid">
+          <article class="card feature-card">
+            <div class="feature-icon">01</div>
+            <h3>About Me</h3>
+            <p>Introduce yourself, your background, and why construction technology and AI interest you.</p>
+          </article>
+
+          <article class="card feature-card">
+            <div class="feature-icon">02</div>
+            <h3>My Projects</h3>
+            <p>Showcase your semester assignments, deliverables, tools used, and key lessons learned.</p>
+          </article>
+
+          <article class="card feature-card">
+            <div class="feature-icon">03</div>
+            <h3>Weekly Articles</h3>
+            <p>Post article summaries, reflections, and connections between industry trends and course topics.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container about-grid">
+        <div class="about-photo" role="img" aria-label="Student collaboration and planning"></div>
+
+        <div class="card">
+          <div class="section-heading">
+            <span class="eyebrow">About Me</span>
+            <h2>Student perspective on AI and the built environment</h2>
+            <p class="muted">
+              My name is Brennen Wallace and I am a graduate student at the University of Kansas. I am studying AI in construction and I am earning my Master’s in Construction Management.
+            </p>
+          </div>
+
+          <p>
+            My name is Brennen Wallace and I am a graduate student at the University of Kansas. I am studying AI in construction and I am getting my Masters of Construction Management. This portfolio documents my progress, assignments, and project work during the semester.
+          </p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <strong>3</strong>
+              Main sections
+            </div>
+            <div class="stat-box">
+              <strong>15+</strong>
+              Weekly entries
+            </div>
+            <div class="stat-box">
+              <strong>100%</strong>
+              Ready for GitHub Pages
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-week">Focus</div>
+              <div>
+                <h3>Why AI in construction matters</h3>
+                <p>Construction teams can use AI to improve workflows, reduce delays, organize information, and make better project decisions.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-week">Goal</div>
+              <div>
+                <h3>Build a professional portfolio</h3>
+                <p>This website is designed to present semester work clearly for your class, future employers, and GitHub viewers.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-week">Next</div>
+              <div>
+                <h3>Add your personal details</h3>
+                <p>Update this section with your name, school information, LinkedIn link, resume link, and contact details.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">My Projects</span>
+          <h2>Course work and semester deliverables</h2>
+          <p class="muted">
+            Use these cards to present the work you completed this semester. Replace the placeholder text with your real assignments,
+            images, PDFs, models, or reports.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="card project-card">
+            <div class="project-image project-one"></div>
+            <div class="project-content">
+              <div class="tag-row">
+                <span class="tag">Project 01</span>
+                <span class="tag">Research</span>
+              </div>
+              <h3>AI Tool Evaluation</h3>
+              <p>Describe an assignment where you reviewed or tested an AI tool used for planning, design, scheduling, or field operations.</p>
+              <p><strong>What to include:</strong> objective, process, software used, results, and key takeaways.</p>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div class="project-image project-two"></div>
+            <div class="project-content">
+              <div class="tag-row">
+                <span class="tag">Project 02</span>
+                <span class="tag">Analysis</span>
+              </div>
+              <h3>Construction Workflow Case Study</h3>
+              <p>Summarize a project or case study that shows how AI can improve communication, risk reduction, or documentation quality.</p>
+              <p><strong>What to include:</strong> problem, solution, class insights, and how the idea applies in practice.</p>
+            </div>
+          </article>
+
+          <article class="card project-card">
+            <div class="project-image project-three"></div>
+            <div class="project-content">
+              <div class="tag-row">
+                <span class="tag">Project 03</span>
+                <span class="tag">Presentation</span>
+              </div>
+              <h3>Book Review: The First 90 Days</h3>
+              <p>I completed a book review on <em>The First 90 Days</em>. The review focused on how a recent college graduate can build a strong professional reputation early in a career.</p>
+              <p><strong>Summary:</strong> A recent college graduate can stand out positively by being consistently reliable, learning quickly, and communicating clearly and professionally. Taking initiative to solve small problems, asking for feedback, and building strong relationships with coworkers also helps you develop a reputation as someone mature, capable, and ready for more responsibility.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="cta-panel">
+          <div>
+            <h3>Want to make this stronger?</h3>
+            <p>Add screenshots of assignments, links to GitHub files, and short captions explaining what each project demonstrates.</p>
+          </div>
+          <a href="#contact" class="btn btn-secondary" style="color: white; border-color: rgba(255,255,255,0.4);">Add Contact Info</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="articles" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Weekly Articles</span>
+          <h2>Article summaries and reflections</h2>
+          <p class="muted">
+            This section is set up for your weekly assignment summaries. Replace the sample content with your real article titles,
+            summaries, and reflections from class.
+          </p>
+        </div>
+
+        <div class="articles-grid">
+          <article class="card article-card">
+            <div class="article-number">01</div>
+            <div>
+              <h3>AI Model Performance Benchmarking Harness</h3>
+              <p><strong>Summary:</strong> The article presents the design and implementation of a generalized benchmark harness to evaluate the performance of artificial intelligence (AI) models in a reproducible and scalable way prior to deployment. AI models—especially deep learning models—are often optimized, such as through pruning or quantization, to run efficiently on resource-constrained devices, but these optimizations can affect accuracy. Existing performance tests typically focus on limited metrics, so the authors argue for a comprehensive benchmarking tool that measures multiple performance dimensions and supports diverse model types.</p>
+            </div>
+            <ul>
+              <li><strong>Proposed solution:</strong> A Performance Benchmark Harness (PBH) that provides a unified inference loop compatible with different AI frameworks like PyTorch and TensorFlow and multiple inference engines.</li>
+              <li><strong>Metrics tracked:</strong> Throughput, latency, memory usage, and accuracy.</li>
+              <li><strong>Main takeaway:</strong> The PBH generates a detailed performance profile for each model, making it easier to compare models before and after optimization.</li>
+            </ul>
+          </article>
+
+          <article class="card article-card">
+            <div class="article-number">02</div>
+            <div>
+              <h3>Week 2 Article Title</h3>
+              <p><strong>Summary:</strong> Add a 4-6 sentence summary here and explain the article in your own words.</p>
+            </div>
+            <ul>
+              <li><strong>Technology:</strong> AI tool, software, or method mentioned.</li>
+              <li><strong>Impact:</strong> How it could change project delivery or field work.</li>
+              <li><strong>Takeaway:</strong> Your biggest insight from the reading.</li>
+            </ul>
+          </article>
+
+          <article class="card article-card">
+            <div class="article-number">03</div>
+            <div>
+              <h3>Week 3 Article Title</h3>
+              <p><strong>Summary:</strong> Continue adding new article cards each week or duplicate this card for the rest of the semester.</p>
+            </div>
+            <ul>
+              <li><strong>Trend:</strong> What industry trend appears in the article?</li>
+              <li><strong>Use case:</strong> Where could this be applied in construction?</li>
+              <li><strong>Question:</strong> What would you want to learn more about next?</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container contact-grid">
+        <article class="card contact-card">
+          <div class="section-heading">
+            <span class="eyebrow">Contact</span>
+            <h2>Connect with me</h2>
+            <p class="muted">Update this area with your real information before publishing.</p>
+          </div>
+          <p><strong>Name:</strong> Your Name</p>
+          <p><strong>Email:</strong> yourname@email.com</p>
+          <p><strong>LinkedIn:</strong> linkedin.com/in/yourprofile</p>
+          <p><strong>GitHub:</strong> github.com/yourusername</p>
+        </article>
+
+        <article class="card contact-card">
+          <div class="section-heading">
+            <span class="eyebrow">Publishing Notes</span>
+            <h2>How to use this on GitHub</h2>
+          </div>
+          <p>Save this file as <strong>index.html</strong> in your GitHub repository.</p>
+          <p>Add an <strong>assets</strong> folder if you want to replace the placeholder photos with your own images.</p>
+          <p>To publish, enable <strong>GitHub Pages</strong> in your repository settings.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-card">
+        <div>
+          <h3>AI in Construction Portfolio</h3>
+          <p>Built for a college course and designed to grow throughout the semester.</p>
+        </div>
+        <a href="#home" class="btn btn-secondary" style="color: white; border-color: rgba(255,255,255,0.35);">Back to Top</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
